@@ -48,7 +48,7 @@ namespace PriceDepo.Repositories.Mongo
 
 		public Product GetById(string id)
 		{
-			var filter = Builders<Product>.Filter.Eq( nameof(Product.id), id);
+			var filter = Builders<Product>.Filter.Eq( nameof(Product.Id), id);
 			return _collection.Find(filter).FirstOrDefault();
 		}
 

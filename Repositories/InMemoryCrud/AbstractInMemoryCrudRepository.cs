@@ -37,7 +37,7 @@ namespace PriceDepo.Repositories.InMemoryCrud
 		{
 			if (removable != null)
 			{
-				Remove(removable.id);
+				Remove(removable.Id);
 			}
 		}
 
@@ -51,12 +51,12 @@ namespace PriceDepo.Repositories.InMemoryCrud
 
 		public void RemoveAll(IEnumerable<TEntity> removables)
 		{
-			RemoveAll(removables.Select(entity => entity.id));
+			RemoveAll(removables.Select(entity => entity.Id));
 		}
 
 		public TEntity Save(TEntity entityToSave)
 		{
-			entities[entityToSave.id] = entityToSave;
+			entities[entityToSave.Id] = entityToSave;
 			return entityToSave;
 		}
 
