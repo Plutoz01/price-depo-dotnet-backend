@@ -37,9 +37,12 @@ namespace PriceDepo.Repositories.Mongo
 			throw new System.NotImplementedException();
 		}
 
-		public IEnumerable<Product> GetAll()
+		public IEnumerable<Product> GetAll(int? limit, int? offset)
 		{
-			var cursor = _collection.Find(EmptyFilter).ToCursor();
+			var cursor = _collection.Find(EmptyFilter)
+				.Skip(offset)
+				.Limit(limit)
+				.ToCursor();
 			return IterateCursor(cursor);
 		}
 
@@ -76,12 +79,14 @@ namespace PriceDepo.Repositories.Mongo
 
 		public Product Save(Product entityToSave)
 		{
-			throw new System.NotImplementedException();
+			_collection.InsertOne(entityToSave);
+			return entityToSave;
 		}
 
 		public IEnumerable<Product> Save(IEnumerable<Product> entitiesToSave)
 		{
-			throw new System.NotImplementedException();
+			_collection.InsertMany(entitiesToSave);
+			return entitiesToSave;
 		}
 	}
 }

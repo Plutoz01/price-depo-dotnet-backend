@@ -54,11 +54,7 @@ namespace PriceDepo
 		{
 			get
 			{
-				Console.WriteLine($"Connection string name: { Configuration["Persistence:Mongo:ConnectionString"] }" );
-
-
 				IMongoClient client = new MongoClient(Configuration["Persistence:Mongo:ConnectionString"]);
-				Console.WriteLine($"database name: { Configuration["Persistence:Mongo:Database"] }" );
 				return client.GetDatabase(Configuration["Persistence:Mongo:Database"]);
 			}
 		}
