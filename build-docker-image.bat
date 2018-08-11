@@ -1,1 +1,1 @@
-docker build --rm -f Dockerfile -t pricedepo-dotnet-backend:latest .
+docker build --rm -f Dockerfile -t plutoz/pricedepo-dotnet-backend:latest .
