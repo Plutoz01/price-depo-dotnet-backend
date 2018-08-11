@@ -1,92 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using PriceDepo.Models;
 
 namespace PriceDepo.Repositories.Mongo
 {
-	public class MongoProductCrudRepository : IProductRepository
+	public class MongoProductCrudRepository : AbstractMongoCrudRepository<Product, string>, IProductRepository
 	{
 		public const string TABLE_NAME = "products";
 
-		private readonly IMongoCollection<Product> _collection;
-
-		public MongoProductCrudRepository(IMongoDatabase database)
+		public MongoProductCrudRepository(IMongoDatabase database) : base(database)
 		{
-			_collection = database.GetCollection<Product>(TABLE_NAME);
 		}
 
-		private FilterDefinition<Product> EmptyFilter
+		protected override string GetTableName()
 		{
-			get
-			{
-				return Builders<Product>.Filter.Empty;
-			}
-		}
-
-		private IEnumerable<Product> IterateCursor(IAsyncCursor<Product> cursor)
-		{
-			foreach (var product in cursor.ToEnumerable())
-			{
-				yield return product;
-			}
-		}
-
-		public long Count()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public IEnumerable<Product> GetAll(int? limit, int? offset)
-		{
-			var cursor = _collection.Find(EmptyFilter)
-				.Skip(offset)
-				.Limit(limit)
-				.ToCursor();
-			return IterateCursor(cursor);
-		}
-
-		public Product GetById(string id)
-		{
-			var filter = Builders<Product>.Filter.Eq( nameof(Product.Id), id);
-			return _collection.Find(filter).FirstOrDefault();
-		}
-
-		public bool IsExists(string id)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void Remove(string id)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void Remove(Product removable)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void RemoveAll(IEnumerable<string> removableIds)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void RemoveAll(IEnumerable<Product> removables)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Product Save(Product entityToSave)
-		{
-			_collection.InsertOne(entityToSave);
-			return entityToSave;
-		}
-
-		public IEnumerable<Product> Save(IEnumerable<Product> entitiesToSave)
-		{
-			_collection.InsertMany(entitiesToSave);
-			return entitiesToSave;
+			return TABLE_NAME;
 		}
 	}
 }
