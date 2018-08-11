@@ -59,7 +59,7 @@ namespace PriceDepo.Repositories.Mongo
 
 		public bool IsExists(TIdentifier id)
 		{
-			return _collection.CountDocuments(GetIdFilter(id)) > 0;
+			return _collection.CountDocuments(GetIdFilter(id), new CountOptions(){ Limit = 1 }) > 0;
 		}
 
 		public void Remove(TIdentifier id)
@@ -89,8 +89,17 @@ namespace PriceDepo.Repositories.Mongo
 
 		public TEntity Save(TEntity entityToSave)
 		{
-			_collection.InsertOne(entityToSave);
+			if (entityToSave.Id == null)
+			{
+				_collection.InsertOne(entityToSave);
+
+			}
+			else
+			{
+				_collection.FindOneAndReplace(GetIdFilter(entityToSave.Id), entityToSave);
+			}
 			return entityToSave;
+
 		}
 
 		public IEnumerable<TEntity> Save(IEnumerable<TEntity> entitiesToSave)

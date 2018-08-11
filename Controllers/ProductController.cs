@@ -21,15 +21,21 @@ namespace PriceDepo.Controllers
 		}
 
 		[HttpGet]
-		public IEnumerable<Product> GetAll([FromQuery] PaginationParameters pagination)
+		public ActionResult<Product[]> GetAll([FromQuery] PaginationParameters pagination)
 		{
-			return _productRepository.GetAll(pagination.Limit, pagination.Offset);
+			return _productRepository.GetAll(pagination.Limit, pagination.Offset).ToArray();
 		}
 
 		[HttpGet("{id}")]
-		public Product Get(string id)
+		[ProducesResponseType((int)HttpStatusCode.NotFound)]
+		public ActionResult<Product> Get(string id)
 		{
-			return _productRepository.GetById(id);
+			var result = _productRepository.GetById(id);
+			if (result == null)
+			{
+				return NotFound();
+			}
+			return result;
 		}
 
 		[HttpPost]
@@ -39,6 +45,10 @@ namespace PriceDepo.Controllers
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
+			}
+			if (newProduct.Id != null)
+			{
+				return BadRequest("New entity must not have Id");
 			}
 			return _productRepository.Save(newProduct);
 		}
@@ -52,6 +62,39 @@ namespace PriceDepo.Controllers
 				return BadRequest(ModelState);
 			}
 			return _productRepository.Save(newProducts).ToArray();
+		}
+
+		[HttpPut("{id}")]
+		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+		[ProducesResponseType((int)HttpStatusCode.NotFound)]
+		public ActionResult<Product> UpdateOne(string id, [FromBody] Product product)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			if (id != product.Id)
+			{
+				return BadRequest($"mismatching identifiers (path: {id}, body: {product?.Id})");
+			}
+			if (!_productRepository.IsExists(id))
+			{
+				return NotFound();
+			}
+			return _productRepository.Save(product);
+		}
+
+		[HttpDelete("{id}")]
+		[ProducesResponseType((int)HttpStatusCode.NoContent)]
+		[ProducesResponseType((int)HttpStatusCode.NotFound)]
+		public IActionResult Delete(string id)
+		{
+			if (!_productRepository.IsExists(id))
+			{
+				return NotFound();
+			}
+			_productRepository.Remove(id);
+			return NoContent();
 		}
 	}
 }
