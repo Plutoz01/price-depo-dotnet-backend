@@ -21,9 +21,11 @@ namespace PriceDepo.Repositories.InMemoryCrud
 			return entities[id];
 		}
 
-		public IEnumerable<TEntity> GetAll()
+		public IEnumerable<TEntity> GetAll(int? limit, int? offset)
 		{
-			return entities.Values;
+			return entities.Values
+				.Skip(offset ?? 0)
+				.Take(limit ?? PaginationParameters.DEFAULT_LIMIT_SIZE);
 		}
 
 		public void Remove(TIdentifier id)
@@ -35,7 +37,7 @@ namespace PriceDepo.Repositories.InMemoryCrud
 		{
 			if (removable != null)
 			{
-				Remove(removable.id);
+				Remove(removable.Id);
 			}
 		}
 
@@ -49,12 +51,12 @@ namespace PriceDepo.Repositories.InMemoryCrud
 
 		public void RemoveAll(IEnumerable<TEntity> removables)
 		{
-			RemoveAll(removables.Select(entity=>entity.id));
+			RemoveAll(removables.Select(entity => entity.Id));
 		}
 
 		public TEntity Save(TEntity entityToSave)
 		{
-			entities[entityToSave.id] = entityToSave;
+			entities[entityToSave.Id] = entityToSave;
 			return entityToSave;
 		}
 
@@ -63,7 +65,8 @@ namespace PriceDepo.Repositories.InMemoryCrud
 			return entitiesToSave.Select(Save).ToList();
 		}
 
-		public bool IsExists(TIdentifier id){
+		public bool IsExists(TIdentifier id)
+		{
 			return entities.ContainsKey(id);
 		}
 	}

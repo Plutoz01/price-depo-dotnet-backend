@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PriceDepo.Models;
@@ -9,26 +10,11 @@ using PriceDepo.Repositories;
 namespace PriceDepo.Controllers
 {
 	[Route("api/[controller]")]
-	[ApiController]
-	public class ProductController : ControllerBase
+	public class ProductController : AbstractCrudController<Product, string>
 	{
-		private readonly IProductRepository _productRepository;
 
-		public ProductController(IProductRepository productRepository) {
-			_productRepository = productRepository;
-		}
-		
-
-		[HttpGet]
-		public IEnumerable<Product> GetAll()
+		public ProductController(IProductRepository productRepository) : base(productRepository)
 		{
-			return _productRepository.GetAll();
 		}
-
-		[HttpGet("{id}")]
-        public Product Get(string id)
-        {
-            return _productRepository.GetById(id);
-        }
 	}
 }

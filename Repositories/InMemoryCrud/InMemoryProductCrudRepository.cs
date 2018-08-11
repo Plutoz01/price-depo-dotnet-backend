@@ -12,10 +12,10 @@ namespace PriceDepo.Repositories.InMemoryCrud
 
 		private static readonly List<Product> dummyProducts = new List<Product>()
 		{
-			new Product() { id = "1", name = "Product1", barcode = "111111", manufacturerId = 1 },
-			new Product() { id = "2", name = "Product2", barcode = "222222", manufacturerId = 1 },
-			new Product() { id = "3", name = "Product3", barcode = "333333", manufacturerId = 1 },
-			new Product() { id = "4", name = "Product4", barcode = "444444", manufacturerId = 2 }
+			new Product() { Id = "1", Name = "Product1", Barcode = "111111", ManufacturerId = 1 },
+			new Product() { Id = "2", Name = "Product2", Barcode = "222222", ManufacturerId = 1 },
+			new Product() { Id = "3", Name = "Product3", Barcode = "333333", ManufacturerId = 1 },
+			new Product() { Id = "4", Name = "Product4", Barcode = "444444", ManufacturerId = 2 }
 		};
 
 		public static InMemoryProductCrudRepository WithDummyData()
