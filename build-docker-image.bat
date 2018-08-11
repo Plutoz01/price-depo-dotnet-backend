@@ -1,1 +1,1 @@
-docker build --rm -f Dockerfile -t pricedepo:latest .
+docker build --rm -f Dockerfile -t pricedepo-dotnet-backend:latest .
