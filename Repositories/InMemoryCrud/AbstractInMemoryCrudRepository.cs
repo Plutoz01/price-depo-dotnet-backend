@@ -25,7 +25,7 @@ namespace PriceDepo.Repositories.InMemoryCrud
 		{
 			return entities.Values
 				.Skip(offset ?? 0)
-				.Take(limit ?? 100);
+				.Take(limit ?? PaginationParameters.DEFAULT_LIMIT_SIZE);
 		}
 
 		public void Remove(TIdentifier id)
