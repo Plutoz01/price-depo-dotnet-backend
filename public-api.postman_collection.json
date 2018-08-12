@@ -1,0 +1,431 @@
+{
+	"info": {
+		"_postman_id": "37c023ff-cb8f-e2d1-a375-77a1992ceae8",
+		"name": "PriceDepo C#",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n    \"categories\": [\n    \t\"Category {{$randomInt}}\",\n    \t\"Category {{$randomInt}}\"\n\t],\n    \"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n    \"manufacturerId\": \"{{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create batch",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "68e39dff-81d6-4426-a2b8-d533b13f875d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\":  \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n\t{\n\t    \"name\": \"Product {{$timestamp}}-{{$randomInt}}\",\n        \"categories\": [\n\t    \t\"Category {{$randomInt}}\",\n\t    \t\"Category {{$randomInt}}\"\n\t\t],\n\t\t\"barcode\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\n\t    \"manufacturerId\": \"{{$randomInt}}\"\n\t},\n]"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product/batch?",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "manufacturerId",
+									"value": "5b70494db616f63a580b0e2a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product?limit=10&offset=0",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product/:productId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "5b69f720e6915171a473376e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by manufacturer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer/:manufacturerId/product",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer",
+								":manufacturerId",
+								"product"
+							],
+							"variable": [
+								{
+									"key": "manufacturerId",
+									"value": "5b70494db616f63a580b0e2b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"5b69f720e6915171a473376e\",\n    \"name\": \"Product 1533671201-776141234\",\n    \"categories\": [\n        \"Category 458\",\n        \"Category 236\"\n    ],\n    \"barcode\": \"57985728934\",\n    \"manufacturerId\": 362\n}"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product/:productId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "5b69f720e6915171a473376e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/product/:productId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"product",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "5b69f720e6915171a473376e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manufacturers",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n}"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create batch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n\t{\n\t    \"name\": \"Manufacturer {{$timestamp}}-{{$randomInt}}\",\n\t},\n]"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer/batch",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer?limit=10&offset=0",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer/:manufacturerId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer",
+								":manufacturerId"
+							],
+							"variable": [
+								{
+									"key": "manufacturerId",
+									"value": "5b704919b616f63a580b0e29"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"5b704919b616f63a580b0e29\",\n    \"name\": \"Manufacturer 1534085402-217 a\"\n}"
+						},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer/:manufacturerId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer",
+								":manufacturerId"
+							],
+							"variable": [
+								{
+									"key": "manufacturerId",
+									"value": "5b704919b616f63a580b0e29"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{product-svc-host}}:{{product-svc-port}}/api/manufacturer/:manufacturerId",
+							"protocol": "http",
+							"host": [
+								"{{product-svc-host}}"
+							],
+							"port": "{{product-svc-port}}",
+							"path": [
+								"api",
+								"manufacturer",
+								":manufacturerId"
+							],
+							"variable": [
+								{
+									"key": "manufacturerId",
+									"value": "5b704919b616f63a580b0e29"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
