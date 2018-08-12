@@ -31,7 +31,8 @@ namespace PriceDepo
 		{
 			services.AddSingleton<IMongoDatabase>(MongoDatabase);
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-			services.AddTransient<IProductRepository, MongoProductCrudRepository>();
+			services.AddTransient<IProductRepository, MongoProductRepository>();
+			services.AddTransient<IManufacturerRepository, MongoManufacturerRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

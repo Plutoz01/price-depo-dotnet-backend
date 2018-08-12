@@ -13,7 +13,7 @@ namespace PriceDepo.Models
 		public string Name { get; set; }
 		public string[] Categories { get; set; } = new string[0];
 		public string Barcode { get; set; }
-		public int? ManufacturerId { get; set; }
+		public string ManufacturerId { get; set; }
 
 		public bool Equals(Product other)
 		{

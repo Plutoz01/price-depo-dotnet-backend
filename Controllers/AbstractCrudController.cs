@@ -14,7 +14,7 @@ namespace PriceDepo.Controllers
 		where TEntity : IIdentifiable<TIdentifier>
 	{
 
-		protected readonly ICrudRepository<TEntity, TIdentifier> _repository;
+		private readonly ICrudRepository<TEntity, TIdentifier> _repository;
 
 		public AbstractCrudController(ICrudRepository<TEntity, TIdentifier> repository)
 		{
