@@ -38,6 +38,11 @@ namespace PriceDepo.Repositories.Mongo
 			return Builders<TEntity>.Filter.Eq(nameof(IIdentifiable<TIdentifier>.Id), id);
 		}
 
+		protected FilterDefinition<TEntity> GetMultipleIdsFilter(IEnumerable<TIdentifier> ids)
+		{
+			return Builders<TEntity>.Filter.In(nameof(IIdentifiable<TIdentifier>.Id), ids);
+		}
+
 		public long Count()
 		{
 			return _collection.CountDocuments(EmptyFilter);
@@ -59,7 +64,7 @@ namespace PriceDepo.Repositories.Mongo
 
 		public bool IsExists(TIdentifier id)
 		{
-			return _collection.CountDocuments(GetIdFilter(id), new CountOptions(){ Limit = 1 }) > 0;
+			return _collection.CountDocuments(GetIdFilter(id), new CountOptions() { Limit = 1 }) > 0;
 		}
 
 		public void Remove(TIdentifier id)
@@ -74,11 +79,7 @@ namespace PriceDepo.Repositories.Mongo
 
 		public void RemoveAll(IEnumerable<TIdentifier> removableIds)
 		{
-			var filters = removableIds
-				.Select(id => GetIdFilter(id))
-				.Aggregate((acc, item) => acc & item);
-
-			_collection.DeleteMany(filters);
+			_collection.DeleteMany(GetMultipleIdsFilter(removableIds));
 		}
 
 		public void RemoveAll(IEnumerable<TEntity> removables)
