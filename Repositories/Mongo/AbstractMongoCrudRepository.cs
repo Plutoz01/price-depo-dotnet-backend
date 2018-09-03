@@ -43,7 +43,8 @@ namespace PriceDepo.Repositories.Mongo
 			return Builders<TEntity>.Filter.In(nameof(IIdentifiable<TIdentifier>.Id), ids);
 		}
 
-		protected IEnumerable<TEntity> FindWithCursor(FilterDefinition<TEntity> filter, int? limit, int? offset) {
+		protected IEnumerable<TEntity> FindWithCursor(FilterDefinition<TEntity> filter, int? limit = null, int? offset = null)
+		{
 			var cursor = _collection.Find(filter)
 				.Skip(offset)
 				.Limit(limit)
@@ -56,7 +57,7 @@ namespace PriceDepo.Repositories.Mongo
 			return _collection.CountDocuments(EmptyFilter);
 		}
 
-		public IEnumerable<TEntity> GetAll(int? limit, int? offset)
+		public IEnumerable<TEntity> GetAll(int? limit = null, int? offset = null)
 		{
 			return FindWithCursor(EmptyFilter, limit, offset);
 		}

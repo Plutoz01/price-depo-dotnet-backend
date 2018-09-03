@@ -8,7 +8,7 @@ namespace PriceDepo.Repositories
 	public interface ICrudRepository<TEntity, TIdentifier>
 		where TEntity : IIdentifiable<TIdentifier>
 	{
-		IEnumerable<TEntity> GetAll(int? limit, int? offset);
+		IEnumerable<TEntity> GetAll(int? limit = null, int? offset = null);
 		TEntity GetById(TIdentifier id);
 		TEntity Save(TEntity entityToSave);
 		IEnumerable<TEntity> Save(IEnumerable<TEntity> entitiesToSave);

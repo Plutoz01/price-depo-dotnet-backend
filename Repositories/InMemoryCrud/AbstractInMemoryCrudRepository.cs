@@ -21,7 +21,7 @@ namespace PriceDepo.Repositories.InMemoryCrud
 			return entities[id];
 		}
 
-		public IEnumerable<TEntity> GetAll(int? limit, int? offset)
+		public IEnumerable<TEntity> GetAll(int? limit = null, int? offset = null)
 		{
 			return entities.Values
 				.Skip(offset ?? 0)
