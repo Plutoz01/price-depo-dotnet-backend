@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using PriceDepo.Models;
+using PriceDepo.Filtering;
+using System.Text.RegularExpressions;
 
 namespace PriceDepo.Repositories.Mongo
 {
@@ -19,9 +22,10 @@ namespace PriceDepo.Repositories.Mongo
 			return TABLE_NAME;
 		}
 
-		public IEnumerable<Product> GetByManufacturerId(string manufacturerId) {
+		public IEnumerable<Product> GetByManufacturerId(string manufacturerId)
+		{
 			var filter = Builders<Product>.Filter.Eq(nameof(Product.ManufacturerId), manufacturerId);
-			return FindWithCursor(filter, null, null);
+			return FindWithCursor(filter);
 		}
 	}
 }

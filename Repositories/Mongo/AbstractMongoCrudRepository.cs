@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using PriceDepo.Models;
+using PriceDepo.Filtering;
+using System.Text.RegularExpressions;
 
 namespace PriceDepo.Repositories.Mongo
 {
@@ -112,6 +115,40 @@ namespace PriceDepo.Repositories.Mongo
 		{
 			_collection.InsertMany(entitiesToSave);
 			return entitiesToSave;
+		}
+
+		// TODO: do not use DTO in repository, instead process it in Controller layer
+		public IEnumerable<TEntity> Filter(IEnumerable<FilterDTO> filters)
+		{
+			var builder = Builders<TEntity>.Filter;
+
+			var mongoFilters = filters.Select(dto =>
+			{
+				switch (dto.Operation)
+				{
+					case FilterOperation.Equals:
+						return builder.Eq(dto.Field, dto.Value);
+
+					case FilterOperation.Contains:
+						return builder.Regex(dto.Field, new BsonRegularExpression($"/{ Regex.Escape(dto.Value) }/i"));
+
+					case FilterOperation.StartsWith:
+						return builder.Regex(dto.Field, new BsonRegularExpression($"/^{ Regex.Escape(dto.Value) }/i"));
+
+					case FilterOperation.CollectionContainsAll:
+						{
+							// TODO: move json parsing logic to controller layer
+							var jsonArray = dto.Value as Newtonsoft.Json.Linq.JArray;
+							string[] filterValues = jsonArray == null || jsonArray.HasValues ? jsonArray.Values<string>().ToArray() : Array.Empty<string>();
+							return builder.All(dto.Field, filterValues);
+						}
+
+					default:
+						throw new ArgumentOutOfRangeException($"Unhandled operation: {dto.Operation}");
+				}
+			}).Aggregate((mongoFilter1, mongoFilter2) => mongoFilter1 & mongoFilter2);
+
+			return FindWithCursor(mongoFilters);
 		}
 	}
 }
