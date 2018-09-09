@@ -1,9 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Collections.Generic;
 using PriceDepo.Models;
 using PriceDepo.Repositories;
-using PriceDepo.Services.Filtering;
+using PriceDepo.Filtering;
 
 namespace PriceDepo.Controllers
 {
@@ -23,7 +24,8 @@ namespace PriceDepo.Controllers
 		{
 			var filters = filterDTOs
 				.Select(ConvertFilterDtoToFilterDefinition)
-				.Select((FilterDefinition<Product> filterDef) => filterDef.ToPredicate());
+				.Select((IFilterDefinition<Product> filterDef) => filterDef.ToPredicate())
+				.ToArray();
 
 			Func<Product, bool> mergedFilters = (Product product) => filters.All(filterFunc => filterFunc(product));
 
@@ -33,46 +35,27 @@ namespace PriceDepo.Controllers
 			;
 		}
 
-		static FilterDefinition<Product> ConvertFilterDtoToFilterDefinition(FilterDTO dto)
+		static IFilterDefinition<Product> ConvertFilterDtoToFilterDefinition(FilterDTO dto)
 		{
 			switch (dto.Field)
 			{
 				case "name":
-					{
-						return MapStringOperationToFilterDefinition(dto.Operation, dto.Value, product => product.Name);
-					}
+					return dto.Operation.ToStringFilterDefinition<Product>(dto.Value as string, product => product.Name);
 				case "barcode":
-					{
-						return MapStringOperationToFilterDefinition(dto.Operation, dto.Value, product => product.Barcode);
-					}
+					return dto.Operation.ToStringFilterDefinition<Product>(dto.Value as string, product => product.Barcode);
+				case "categories": {
+					var jsonArray = dto.Value as Newtonsoft.Json.Linq.JArray;
+					string[] filterValues = jsonArray == null || jsonArray.HasValues ? jsonArray.Values<string>().ToArray() : Array.Empty<string>();
+					return dto.Operation.ToCollectionDefinition<Product, string>(filterValues, product => product.Categories);
+				}
+					
 				default:
 					throw new ArgumentOutOfRangeException($"Unhandled field: {dto.Field}");
 			}
 		}
-
-		static FilterDefinition<Product> MapStringOperationToFilterDefinition(FilterOperation operation, string value, Func<Product, string> propertySelector)
-		{
-			switch (operation)
-			{
-				case FilterOperation.Contains:
-					return new StringPropertyContainsDef<Product>(value, propertySelector);
-				case FilterOperation.StartsWith:
-					return new StringPropertyStartsWithDef<Product>(value, propertySelector);
-
-				default:
-					throw new ArgumentOutOfRangeException($"Unhandled operation: {operation}");
-			}
-
-		}
-
 	}
 
-	public class FilterDTO
-	{
-		public FilterOperation Operation { get; set; }
-		public string Field { get; set; }
-		public string Value { get; set; }
-	}
+
 
 
 
